@@ -9,9 +9,6 @@ import java.time.Duration;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CompletionStage;
-
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class RestClient {
@@ -52,7 +49,7 @@ public class RestClient {
 
 		String json = objectMapper.writeValueAsString(params);
 
-		System.out.println("Request JSON: " + json);
+		// System.out.println("Request JSON: " + json);
 
 		return HttpRequest.newBuilder()
 				.uri(URI.create(REST_BASE_URL + endpoint))

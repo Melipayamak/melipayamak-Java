@@ -1,4 +1,4 @@
-# melipayamak Web Service Wrapper (SDK) for Java
+# Melipayamak Web Service Wrapper (SDK) for Java
 
 ![Java Version](https://img.shields.io/badge/Java-11%2B-ED8B00?logo=openjdk&logoColor=white)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -31,6 +31,66 @@ mvn clean test
 
 ### نحوه افزودن به پروژه
 
+با مراجعه به [Sonatype](https://central.sonatype.com/artifact/com.melipayamak/melipayamak-java) کانفیگ متناسب با پروژه خود را اضافه کنید
 
 ### نحوه استفاده
 
+این پروژه هر دو حالت `sync` و `async` را به صورت زیر پشتیبانی میکند
+
+```java
+SoapClient soapClient = new SoapClient("username", "password", new DefaultHttpTransport());
+
+HttpResponse syncSoapResponse = soapClient.SendSimpleSMS2(
+    "09123456789",
+    "5000xxx",
+    "Hello from my Java SDK!",
+    false
+).toCompletableFuture().get();
+
+// Async
+soapClient.SendSimpleSMS(
+    new String[]{"09123456789", "09123456789"},
+    "5000xxx",
+    "Hello!",
+    false
+).thenAccept(response -> {
+    System.out.println("Response: " + response);
+}).exceptionally(error -> {
+    error.printStackTrace();
+    return null;
+});
+
+
+RestClient restClient = new RestClient("username", "password");
+
+String syncRestResponse = restClient.SendSMS(
+    "09123456789",
+    "5000xxx",
+    "Hello",
+    false
+);
+
+// rest async example
+CountDownLatch latch = new CountDownLatch(1);
+
+restClient.SendSMSAsync(
+    "09123456789",
+    "5000xxx",
+    "Hello!",
+    false
+).thenAccept(response -> {
+    System.out.println("Response: " + response);
+}).exceptionally(error -> {
+    error.printStackTrace();
+    return null;
+})
+.whenComplete((result, error) -> latch.countDown());
+
+// Keep the application alive until completion.
+latch.await();
+
+```
+
+<!-- publish to generate locally
+mvn clean package
+mvn clean deploy -->
