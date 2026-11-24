@@ -1,6 +1,6 @@
 # melipayamak Java
 
-![Java Version](https://img.shields.io/badge/Java-21%2B-ED8B00?logo=openjdk&logoColor=white)
+![Java Version](https://img.shields.io/badge/Java-11%2B-ED8B00?logo=openjdk&logoColor=white)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 ![Status](https://img.shields.io/badge/Status-Stable-brightgreen)
 ![Maven](https://img.shields.io/badge/build-Maven-C71A36?logo=apachemaven&logoColor=white)
@@ -17,3 +17,10 @@
 - Play Framework
 - Plain Java applications
 - Scala
+
+
+## Run Tests
+
+```bash
+mvn clean test
+```

@@ -1,6 +1,5 @@
 package com.melipayamak.soap;
 
-
 import java.util.concurrent.CompletionStage;
 
 import com.melipayamak.http.HttpResponse;
@@ -10,7 +9,7 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class SoapClient { 
+public class SoapClient {
 
     private final HttpTransport httpTransport;
     private final SoapXmlBuilder soapBuilder;
@@ -20,10 +19,8 @@ public class SoapClient {
     private final String SOAP_CONTACTS_URL = "https://api.payamak-panel.com/post/contacts.asmx";
     private final String SOAP_ACTIONS_URL = "https://api.payamak-panel.com/post/actions.asmx";
     private final String SOAP_SCHEDULE_URL = "https://api.payamak-panel.com/post/schedule.asmx";
-    private final String SOAP_TICKETS_URL = "https://api.payamak-panel.com/post/tickets.asmx";
     private final String SOAP_USERS_URL = "https://api.payamak-panel.com/post/users.asmx";
     private final String SOAP_VOICE_URL = "https://api.payamak-panel.com/post/voice.asmx";
-
 
     public SoapClient(String username, String password, HttpTransport httpTransport) {
         this.httpTransport = httpTransport;
@@ -32,15 +29,15 @@ public class SoapClient {
 
     private CompletionStage<HttpResponse> execute(String soapUrl, String soapAction, String requestXml) {
 
-    return httpTransport.post(
-        soapUrl,
-        "text/xml; charset=utf-8",
-        "http://tempuri.org/" + soapAction,
-        requestXml
-    );
-}
+        return httpTransport.post(
+                soapUrl,
+                "text/xml; charset=utf-8",
+                "http://tempuri.org/" + soapAction,
+                requestXml);
+    }
 
-    public CompletionStage<HttpResponse> SendSimpleSMS2(String to, String from, String text, boolean isflash) throws Exception {
+    public CompletionStage<HttpResponse> SendSimpleSMS2(String to, String from, String text, boolean isflash)
+            throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("text", text);
@@ -51,10 +48,11 @@ public class SoapClient {
         String _func = "SendSimpleSMS2";
 
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_SEND_URL, _func, wsReq);        
+        return execute(SOAP_SEND_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> SendSimpleSMS(String[] to, String from, String text, Boolean isflash) throws Exception {
+    public CompletionStage<HttpResponse> SendSimpleSMS(String[] to, String from, String text, Boolean isflash)
+            throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("to", new SoapXmlBuilder.SoapArray("string", Arrays.asList(to)));
@@ -65,10 +63,11 @@ public class SoapClient {
         String _func = "SendSimpleSMS";
 
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_SEND_URL, _func, wsReq);  
+        return execute(SOAP_SEND_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> SendSms(String[] to, String from, String text, boolean isflash, String udh) throws Exception {
+    public CompletionStage<HttpResponse> SendSms(String[] to, String from, String text, boolean isflash, String udh)
+            throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("to", new SoapXmlBuilder.SoapArray("string", Arrays.asList(to)));
@@ -78,12 +77,13 @@ public class SoapClient {
         params.put("udh", udh);
 
         String _func = "SendSms";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_SEND_URL, _func, wsReq);  
+        return execute(SOAP_SEND_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> SendWithDomain(String to, String from, String text, boolean isflash, String domain) throws Exception {
+    public CompletionStage<HttpResponse> SendWithDomain(String to, String from, String text, boolean isflash,
+            String domain) throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("to", to);
@@ -91,11 +91,11 @@ public class SoapClient {
         params.put("text", text);
         params.put("isflash", isflash);
         params.put("domain", domain);
-       
+
         String _func = "SendWithDomain";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_SEND_URL, _func, wsReq);  
+        return execute(SOAP_SEND_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> SendByBaseNumber(String[] text, String to, int bodyId) throws Exception {
@@ -106,9 +106,9 @@ public class SoapClient {
         params.put("bodyId", bodyId);
 
         String _func = "SendByBaseNumber";
-     
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_SEND_URL, _func, wsReq);  
+        return execute(SOAP_SEND_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> SendByBaseNumber2(String text, String to, int bodyId) throws Exception {
@@ -117,11 +117,11 @@ public class SoapClient {
         params.put("text", text);
         params.put("to", to);
         params.put("bodyId", bodyId);
-        
+
         String _func = "SendByBaseNumber2";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_SEND_URL, _func, wsReq);  
+        return execute(SOAP_SEND_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> getMessages(int location, String from, int index, int count) throws Exception {
@@ -133,12 +133,13 @@ public class SoapClient {
         params.put("count", count);
 
         String _func = "getMessages";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_SEND_URL, _func, wsReq);  
+        return execute(SOAP_SEND_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> GetSmsPrice(int irancellCount, int mtnCount, String from, String text) throws Exception {
+    public CompletionStage<HttpResponse> GetSmsPrice(int irancellCount, int mtnCount, String from, String text)
+            throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("irancellCount", irancellCount);
@@ -147,9 +148,9 @@ public class SoapClient {
         params.put("text", text);
 
         String _func = "GetSmsPrice";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_SEND_URL, _func, wsReq);  
+        return execute(SOAP_SEND_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetMultiDelivery2(String recId) throws Exception {
@@ -158,9 +159,9 @@ public class SoapClient {
         params.put("recId", recId);
 
         String _func = "GetMultiDelivery2";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_SEND_URL, _func, wsReq);  
+        return execute(SOAP_SEND_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetMultiDelivery(String recId) throws Exception {
@@ -169,9 +170,9 @@ public class SoapClient {
         params.put("recId", recId);
 
         String _func = "GetMultiDelivery";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_SEND_URL, _func, wsReq);  
+        return execute(SOAP_SEND_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetInboxCount(boolean isRead) throws Exception {
@@ -180,9 +181,9 @@ public class SoapClient {
         params.put("isRead", isRead);
 
         String _func = "GetInboxCount";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_SEND_URL, _func, wsReq);  
+        return execute(SOAP_SEND_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetDelivery2(String recId) throws Exception {
@@ -191,9 +192,9 @@ public class SoapClient {
         params.put("recId", recId);
 
         String _func = "GetDelivery2";
-     
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_SEND_URL, _func, wsReq);  
+        return execute(SOAP_SEND_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetDelivery(String recId) throws Exception {
@@ -202,9 +203,9 @@ public class SoapClient {
         params.put("recId", recId);
 
         String _func = "GetDelivery";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_SEND_URL, _func, wsReq);  
+        return execute(SOAP_SEND_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetDeliveries3(String[] recIds) throws Exception {
@@ -213,20 +214,20 @@ public class SoapClient {
         params.put("recIds", new SoapXmlBuilder.SoapArray("string", Arrays.asList(recIds)));
 
         String _func = "GetDeliveries3";
-     
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
         return execute(SOAP_SEND_URL, _func, wsReq);
     }
 
- 	public CompletionStage<HttpResponse> GetDeliveries2(String recId) throws Exception {
+    public CompletionStage<HttpResponse> GetDeliveries2(String recId) throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("recId", recId);
 
         String _func = "GetDeliveries2";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_SEND_URL, _func, wsReq);  
+        return execute(SOAP_SEND_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetDeliveries(long[] recIds) throws Exception {
@@ -235,21 +236,19 @@ public class SoapClient {
         params.put("recIds", new SoapXmlBuilder.SoapArray("long", Arrays.asList(recIds)));
 
         String _func = "GetDeliveries";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_SEND_URL, _func, wsReq);  
+        return execute(SOAP_SEND_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetCredit() throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         String _func = "GetCredit";
-        
-        String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_SEND_URL, _func, wsReq);  
-    }
 
-    
+        String wsReq = soapBuilder.buildWsReq(_func, params);
+        return execute(SOAP_SEND_URL, _func, wsReq);
+    }
 
     // Receive
     public CompletionStage<HttpResponse> RemoveMessages2(int location, String msgIds) throws Exception {
@@ -259,12 +258,13 @@ public class SoapClient {
         params.put("msgIds", msgIds);
 
         String _func = "RemoveMessages2";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_RECEIVE_URL, _func, wsReq);  
+        return execute(SOAP_RECEIVE_URL, _func, wsReq);
     }
 
-    // use 'Received' or 'Sent' or 'Removed' or 'Deleted' for location in the next method
+    // use 'Received' or 'Sent' or 'Removed' or 'Deleted' for location in the next
+    // method
     public CompletionStage<HttpResponse> RemoveMessages(String location, String msgIds) throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
@@ -272,12 +272,13 @@ public class SoapClient {
         params.put("msgIds", msgIds);
 
         String _func = "RemoveMessages";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_RECEIVE_URL, _func, wsReq);  
+        return execute(SOAP_RECEIVE_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> GetUsersMessagesByDate(int location, String from, int index, int count, String dateFrom, String dateTo) throws Exception {
+    public CompletionStage<HttpResponse> GetUsersMessagesByDate(int location, String from, int index, int count,
+            String dateFrom, String dateTo) throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("location", location);
@@ -288,21 +289,22 @@ public class SoapClient {
         params.put("dateTo", dateTo);
 
         String _func = "GetUsersMessagesByDate";
-     
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_RECEIVE_URL, _func, wsReq);  
+        return execute(SOAP_RECEIVE_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetOutBoxCount() throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         String _func = "GetOutBoxCount";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_RECEIVE_URL, _func, wsReq);  
+        return execute(SOAP_RECEIVE_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> GetMessagesWithChangeIsRead(int location, String from, int index, int count, boolean isRead, boolean changeIsRead) throws Exception {
+    public CompletionStage<HttpResponse> GetMessagesWithChangeIsRead(int location, String from, int index, int count,
+            boolean isRead, boolean changeIsRead) throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("location", location);
@@ -312,10 +314,10 @@ public class SoapClient {
         params.put("isRead", isRead);
         params.put("changeIsRead", changeIsRead);
 
-       String _func = "GetMessagesWithChangeIsRead";
-        
+        String _func = "GetMessagesWithChangeIsRead";
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_RECEIVE_URL, _func, wsReq);  
+        return execute(SOAP_RECEIVE_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetMessagesReceptions(int msgId, int fromRows) throws Exception {
@@ -325,12 +327,13 @@ public class SoapClient {
         params.put("fromRows", fromRows);
 
         String _func = "GetMessagesReceptions";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_RECEIVE_URL, _func, wsReq);  
+        return execute(SOAP_RECEIVE_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> GetMessagesFilterByDate(int location, String from, int index, int count, String dateFrom, String dateTo, boolean isRead) throws Exception {
+    public CompletionStage<HttpResponse> GetMessagesFilterByDate(int location, String from, int index, int count,
+            String dateFrom, String dateTo, boolean isRead) throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("location", location);
@@ -342,12 +345,13 @@ public class SoapClient {
         params.put("isRead", isRead);
 
         String _func = "GetMessagesFilterByDate";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_RECEIVE_URL, _func, wsReq);  
+        return execute(SOAP_RECEIVE_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> GetMessagesByDate(int location, String from, int index, int count, String dateFrom, String dateTo) throws Exception {
+    public CompletionStage<HttpResponse> GetMessagesByDate(int location, String from, int index, int count,
+            String dateFrom, String dateTo) throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("location", location);
@@ -358,12 +362,13 @@ public class SoapClient {
         params.put("dateTo", dateTo);
 
         String _func = "GetMessagesByDate";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_RECEIVE_URL, _func, wsReq);  
+        return execute(SOAP_RECEIVE_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> GetMessagesAfterIDJson(int location, String from, int count, int msgId) throws Exception {
+    public CompletionStage<HttpResponse> GetMessagesAfterIDJson(int location, String from, int count, int msgId)
+            throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("location", location);
@@ -372,12 +377,13 @@ public class SoapClient {
         params.put("msgId", msgId);
 
         String _func = "GetMessagesAfterIDJson";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_RECEIVE_URL, _func, wsReq);  
+        return execute(SOAP_RECEIVE_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> GetMessagesAfterID(int location, String from, int count, int msgId) throws Exception {
+    public CompletionStage<HttpResponse> GetMessagesAfterID(int location, String from, int count, int msgId)
+            throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("location", location);
@@ -386,9 +392,9 @@ public class SoapClient {
         params.put("msgId", msgId);
 
         String _func = "GetMessagesAfterID";
-     
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_RECEIVE_URL, _func, wsReq);  
+        return execute(SOAP_RECEIVE_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetMessages(int location, String from, int index, int count) throws Exception {
@@ -400,12 +406,13 @@ public class SoapClient {
         params.put("count", count);
 
         String _func = "GetMessages";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_RECEIVE_URL, _func, wsReq);  
+        return execute(SOAP_RECEIVE_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> GetMessageStr(int location, String from, int index, int count) throws Exception {
+    public CompletionStage<HttpResponse> GetMessageStr(int location, String from, int index, int count)
+            throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("location", location);
@@ -414,9 +421,9 @@ public class SoapClient {
         params.put("count", count);
 
         String _func = "GetMessageStr";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_RECEIVE_URL, _func, wsReq);  
+        return execute(SOAP_RECEIVE_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> ChangeMessageIsRead(String msgIds) throws Exception {
@@ -425,13 +432,14 @@ public class SoapClient {
         params.put("msgIds", msgIds);
 
         String _func = "ChangeMessageIsRead";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_RECEIVE_URL, _func, wsReq);  
+        return execute(SOAP_RECEIVE_URL, _func, wsReq);
     }
 
     // Users
-    public CompletionStage<HttpResponse> AddPayment(String name, String family, String bankName, String code, double amount, String cardNumber) throws Exception {
+    public CompletionStage<HttpResponse> AddPayment(String name, String family, String bankName, String code,
+            double amount, String cardNumber) throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("name", name);
@@ -442,12 +450,14 @@ public class SoapClient {
         params.put("cardNumber", cardNumber);
 
         String _func = "AddPayment";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_USERS_URL, _func, wsReq);  
+        return execute(SOAP_USERS_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> AddUser(int productId, String descriptions, String mobileNumber, String emailAddress, String nationalCode, String name, String family, String corporation, String phone, String fax, String address, String postalCode, String certificateNumber) throws Exception {
+    public CompletionStage<HttpResponse> AddUser(int productId, String descriptions, String mobileNumber,
+            String emailAddress, String nationalCode, String name, String family, String corporation, String phone,
+            String fax, String address, String postalCode, String certificateNumber) throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("productId", productId);
@@ -463,14 +473,17 @@ public class SoapClient {
         params.put("address", address);
         params.put("postalCode", postalCode);
         params.put("certificateNumber", certificateNumber);
- 
+
         String _func = "AddUser";
-     
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_USERS_URL, _func, wsReq);  
+        return execute(SOAP_USERS_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> AddUserComplete(int productId, String descriptions, String mobileNumber, String emailAddress, String nationalCode, String name, String family, String corporation, String phone, String fax, String address, String postalCode, String certificateNumber, int country, int province, int city, String howFindUs, String commercialCode, String saleId, String recommanderId) throws Exception {
+    public CompletionStage<HttpResponse> AddUserComplete(int productId, String descriptions, String mobileNumber,
+            String emailAddress, String nationalCode, String name, String family, String corporation, String phone,
+            String fax, String address, String postalCode, String certificateNumber, int country, int province,
+            int city, String howFindUs, String commercialCode, String saleId, String recommanderId) throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("productId", productId);
@@ -495,12 +508,15 @@ public class SoapClient {
         params.put("recommanderId", recommanderId);
 
         String _func = "AddUserComplete";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_USERS_URL, _func, wsReq);  
+        return execute(SOAP_USERS_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> AddUserWithLocation(int productId, String descriptions, String mobileNumber, String emailAddress, String nationalCode, String name, String family, String corporation, String phone, String fax, String address, String postalCode, String certificateNumber, int country, int province, int city) throws Exception {
+    public CompletionStage<HttpResponse> AddUserWithLocation(int productId, String descriptions, String mobileNumber,
+            String emailAddress, String nationalCode, String name, String family, String corporation, String phone,
+            String fax, String address, String postalCode, String certificateNumber, int country, int province,
+            int city) throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("productId", productId);
@@ -519,14 +535,15 @@ public class SoapClient {
         params.put("country", country);
         params.put("province", province);
         params.put("city", city);
- 
+
         String _func = "AddUserWithLocation";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_USERS_URL, _func, wsReq);  
+        return execute(SOAP_USERS_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> AddUserWithMobileNumber(int productId, String mobileNumber, String firstName, String lastName, String email) throws Exception {
+    public CompletionStage<HttpResponse> AddUserWithMobileNumber(int productId, String mobileNumber, String firstName,
+            String lastName, String email) throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("productId", productId);
@@ -536,12 +553,15 @@ public class SoapClient {
         params.put("email", email);
 
         String _func = "AddUserWithMobileNumber";
-     
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_USERS_URL, _func, wsReq);  
+        return execute(SOAP_USERS_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> AddUserWithUserNameAndPass(String targetUserName, String targetUserPassword, int productId, String descriptions, String mobileNumber, String emailAddress, String nationalCode, String name, String family, String corporation, String phone, String fax, String address, String postalCode, String certificateNumber) throws Exception {
+    public CompletionStage<HttpResponse> AddUserWithUserNameAndPass(String targetUserName, String targetUserPassword,
+            int productId, String descriptions, String mobileNumber, String emailAddress, String nationalCode,
+            String name, String family, String corporation, String phone, String fax, String address, String postalCode,
+            String certificateNumber) throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("targetUserName", targetUserName);
@@ -561,21 +581,22 @@ public class SoapClient {
         params.put("certificateNumber", certificateNumber);
 
         String _func = "AddUserWithUserNameAndPass";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_USERS_URL, _func, wsReq);  
+        return execute(SOAP_USERS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> AuthenticateUser() throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         String _func = "AuthenticateUser";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_USERS_URL, _func, wsReq);  
+        return execute(SOAP_USERS_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> ChangeUserCredit(double amount, String description, String targetUsername, boolean GetTax) throws Exception {
+    public CompletionStage<HttpResponse> ChangeUserCredit(double amount, String description, String targetUsername,
+            boolean GetTax) throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("amount", amount);
@@ -584,12 +605,13 @@ public class SoapClient {
         params.put("GetTax", GetTax);
 
         String _func = "ChangeUserCredit";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_USERS_URL, _func, wsReq);  
+        return execute(SOAP_USERS_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> ChangeUserCredit2(String amount, String description, String targetUsername, boolean GetTax) throws Exception {
+    public CompletionStage<HttpResponse> ChangeUserCredit2(String amount, String description, String targetUsername,
+            boolean GetTax) throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("amount", amount);
@@ -598,12 +620,13 @@ public class SoapClient {
         params.put("GetTax", GetTax);
 
         String _func = "ChangeUserCredit2";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_USERS_URL, _func, wsReq);  
+        return execute(SOAP_USERS_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> ChangeUserCreditBySeccondPass(String seccondPassword, double amount, String description, String targetUsername, boolean GetTax) throws Exception {
+    public CompletionStage<HttpResponse> ChangeUserCreditBySeccondPass(String seccondPassword, double amount,
+            String description, String targetUsername, boolean GetTax) throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("seccondPassword", seccondPassword);
@@ -613,9 +636,9 @@ public class SoapClient {
         params.put("GetTax", GetTax);
 
         String _func = "ChangeUserCreditBySeccondPass";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_USERS_URL, _func, wsReq);  
+        return execute(SOAP_USERS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> DeductUserCredit(double amount, String description) throws Exception {
@@ -625,12 +648,13 @@ public class SoapClient {
         params.put("description", description);
 
         String _func = "DeductUserCredit";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_USERS_URL, _func, wsReq);  
+        return execute(SOAP_USERS_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> ForgotPassword(String mobileNumber, String emailAddress, String targetUsername) throws Exception {
+    public CompletionStage<HttpResponse> ForgotPassword(String mobileNumber, String emailAddress, String targetUsername)
+            throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("mobileNumber", mobileNumber);
@@ -638,9 +662,9 @@ public class SoapClient {
         params.put("targetUsername", targetUsername);
 
         String _func = "ForgotPassword";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_USERS_URL, _func, wsReq);  
+        return execute(SOAP_USERS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetCities(int provinceId) throws Exception {
@@ -649,36 +673,36 @@ public class SoapClient {
         params.put("provinceId", provinceId);
 
         String _func = "GetCities";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_USERS_URL, _func, wsReq);  
+        return execute(SOAP_USERS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetEnExpireDate() throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
-       String _func = "GetEnExpireDate";
-        
+        String _func = "GetEnExpireDate";
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_USERS_URL, _func, wsReq);  
+        return execute(SOAP_USERS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetExpireDate() throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         String _func = "GetExpireDate";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_USERS_URL, _func, wsReq);  
+        return execute(SOAP_USERS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetProvinces() throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         String _func = "GetProvinces";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_USERS_URL, _func, wsReq);  
+        return execute(SOAP_USERS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetUserBasePrice(String targetUsername) throws Exception {
@@ -687,9 +711,9 @@ public class SoapClient {
         params.put("targetUsername", targetUsername);
 
         String _func = "GetUserBasePrice";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_USERS_URL, _func, wsReq);  
+        return execute(SOAP_USERS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetUserByUserID(String pass, int userId) throws Exception {
@@ -699,9 +723,9 @@ public class SoapClient {
         params.put("pass", pass);
 
         String _func = "GetUserByUserID";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_USERS_URL, _func, wsReq);  
+        return execute(SOAP_USERS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetUserCredit(String targetUsername) throws Exception {
@@ -710,21 +734,22 @@ public class SoapClient {
         params.put("targetUsername", targetUsername);
 
         String _func = "GetUserCredit";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_USERS_URL, _func, wsReq);  
+        return execute(SOAP_USERS_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> GetUserCreditBySecondPass(String secondPassword, String targetUsername) throws Exception {
+    public CompletionStage<HttpResponse> GetUserCreditBySecondPass(String secondPassword, String targetUsername)
+            throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("targetUsername", targetUsername);
         params.put("secondPassword", secondPassword);
 
         String _func = "GetUserCreditBySecondPass";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_USERS_URL, _func, wsReq);  
+        return execute(SOAP_USERS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetUserDetails(String targetUsername) throws Exception {
@@ -732,9 +757,9 @@ public class SoapClient {
 
         params.put("targetUsername", targetUsername);
         String _func = "GetUserDetails";
-     
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_USERS_URL, _func, wsReq);  
+        return execute(SOAP_USERS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetUserIsExist(String targetUsername) throws Exception {
@@ -743,21 +768,22 @@ public class SoapClient {
         params.put("targetUsername", targetUsername);
 
         String _func = "GetUserIsExist";
-     
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_USERS_URL, _func, wsReq);  
+        return execute(SOAP_USERS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetUserNumbers() throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         String _func = "GetUserNumbers";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_USERS_URL, _func, wsReq);  
+        return execute(SOAP_USERS_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> GetUserTransactions(String targetUsername, String creditType, String dateFrom, String dateTo, String keyword) throws Exception {
+    public CompletionStage<HttpResponse> GetUserTransactions(String targetUsername, String creditType, String dateFrom,
+            String dateTo, String keyword) throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("targetUsername", targetUsername);
@@ -767,21 +793,22 @@ public class SoapClient {
         params.put("keyword", keyword);
 
         String _func = "GetUserTransactions";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_USERS_URL, _func, wsReq);  
+        return execute(SOAP_USERS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetUserWallet() throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         String _func = "GetUserWallet";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_USERS_URL, _func, wsReq);  
+        return execute(SOAP_USERS_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> GetUserWalletTransaction(String dateFrom, String dateTo, int count, int startIndex, String payType, String PayLoc) throws Exception {
+    public CompletionStage<HttpResponse> GetUserWalletTransaction(String dateFrom, String dateTo, int count,
+            int startIndex, String payType, String PayLoc) throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("dateFrom", dateFrom);
@@ -792,18 +819,18 @@ public class SoapClient {
         params.put("PayLoc", PayLoc);
 
         String _func = "GetUserWalletTransaction";
-     
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_USERS_URL, _func, wsReq);  
+        return execute(SOAP_USERS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetUsers() throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         String _func = "GetUsers";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_USERS_URL, _func, wsReq);  
+        return execute(SOAP_USERS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> HasFilter(String text) throws Exception {
@@ -812,9 +839,9 @@ public class SoapClient {
         params.put("text", text);
 
         String _func = "HasFilter";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_USERS_URL, _func, wsReq);  
+        return execute(SOAP_USERS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> RemoveUser(String targetUsername) throws Exception {
@@ -823,9 +850,9 @@ public class SoapClient {
         params.put("targetUsername", targetUsername);
 
         String _func = "RemoveUser";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_USERS_URL, _func, wsReq);  
+        return execute(SOAP_USERS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> RevivalUser(String targetUsername) throws Exception {
@@ -834,13 +861,16 @@ public class SoapClient {
         params.put("targetUsername", targetUsername);
 
         String _func = "RevivalUser";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_USERS_URL, _func, wsReq);  
+        return execute(SOAP_USERS_URL, _func, wsReq);
     }
 
     // Contacts
-    public CompletionStage<HttpResponse> AddContact(String groupIds, String firstname, String lastname, String nickname, String corporation, String mobilenumber, String phone, String fax, String birthdate, String email, int gender, int province, int city, String address, String postalCode, String additionaldate, String additionaltext, String descriptions) throws Exception {
+    public CompletionStage<HttpResponse> AddContact(String groupIds, String firstname, String lastname, String nickname,
+            String corporation, String mobilenumber, String phone, String fax, String birthdate, String email,
+            int gender, int province, int city, String address, String postalCode, String additionaldate,
+            String additionaltext, String descriptions) throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("groupIds", groupIds);
@@ -863,12 +893,13 @@ public class SoapClient {
         params.put("descriptions", descriptions);
 
         String _func = "AddContact";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_CONTACTS_URL, _func, wsReq);  
+        return execute(SOAP_CONTACTS_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> AddContactEvents(int contactId, String eventName, int eventType, String eventDate) throws Exception {
+    public CompletionStage<HttpResponse> AddContactEvents(int contactId, String eventName, int eventType,
+            String eventDate) throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("contactId", contactId);
@@ -877,12 +908,13 @@ public class SoapClient {
         params.put("eventDate", eventDate);
 
         String _func = "AddContactEvents";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_CONTACTS_URL, _func, wsReq);  
+        return execute(SOAP_CONTACTS_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> AddGroup(String groupName, String Descriptions, boolean showToChilds) throws Exception {
+    public CompletionStage<HttpResponse> AddGroup(String groupName, String Descriptions, boolean showToChilds)
+            throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("groupName", groupName);
@@ -890,12 +922,15 @@ public class SoapClient {
         params.put("showToChilds", showToChilds);
 
         String _func = "AddGroup";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_CONTACTS_URL, _func, wsReq);  
+        return execute(SOAP_CONTACTS_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> ChangeContact(int contactId, String mobilenumber, String firstname, String lastname, String nickname, String corporation, String phone, String fax, String email, int gender, int province, int city, String address, String postalCode, String additionaltext, String descriptions, int contactStatus) throws Exception {
+    public CompletionStage<HttpResponse> ChangeContact(int contactId, String mobilenumber, String firstname,
+            String lastname, String nickname, String corporation, String phone, String fax, String email, int gender,
+            int province, int city, String address, String postalCode, String additionaltext, String descriptions,
+            int contactStatus) throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("contactId", contactId);
@@ -917,12 +952,13 @@ public class SoapClient {
         params.put("contactStatus", contactStatus);
 
         String _func = "ChangeContact";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_CONTACTS_URL, _func, wsReq);  
+        return execute(SOAP_CONTACTS_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> ChangeGroup(int groupId, String groupName, String Descriptions, boolean showToChilds, int groupStatus) throws Exception {
+    public CompletionStage<HttpResponse> ChangeGroup(int groupId, String groupName, String Descriptions,
+            boolean showToChilds, int groupStatus) throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("groupId", groupId);
@@ -932,9 +968,9 @@ public class SoapClient {
         params.put("groupStatus", groupStatus);
 
         String _func = "ChangeGroup";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_CONTACTS_URL, _func, wsReq);  
+        return execute(SOAP_CONTACTS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> CheckMobileExistInContact(String mobileNumber) throws Exception {
@@ -943,9 +979,9 @@ public class SoapClient {
         params.put("mobileNumber", mobileNumber);
 
         String _func = "CheckMobileExistInContact";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_CONTACTS_URL, _func, wsReq);  
+        return execute(SOAP_CONTACTS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetContactEvents(int contactId) throws Exception {
@@ -954,12 +990,13 @@ public class SoapClient {
         params.put("contactId", contactId);
 
         String _func = "GetContactEvents";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_CONTACTS_URL, _func, wsReq);  
+        return execute(SOAP_CONTACTS_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> GetContacts(int groupId, String keyword, int from, int count) throws Exception {
+    public CompletionStage<HttpResponse> GetContacts(int groupId, String keyword, int from, int count)
+            throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("groupId", groupId);
@@ -968,9 +1005,9 @@ public class SoapClient {
         params.put("count", count);
 
         String _func = "GetContacts";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_CONTACTS_URL, _func, wsReq);  
+        return execute(SOAP_CONTACTS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetContactsByID(int contactId, int status) throws Exception {
@@ -980,21 +1017,22 @@ public class SoapClient {
         params.put("status", status);
 
         String _func = "GetContactsByID";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_CONTACTS_URL, _func, wsReq);  
+        return execute(SOAP_CONTACTS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetGroups() throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         String _func = "GetGroups";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_CONTACTS_URL, _func, wsReq);  
+        return execute(SOAP_CONTACTS_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> MergeGroups(int originGroupId, int destinationGroupId, boolean deleteOriginGroup) throws Exception {
+    public CompletionStage<HttpResponse> MergeGroups(int originGroupId, int destinationGroupId,
+            boolean deleteOriginGroup) throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("originGroupId", originGroupId);
@@ -1002,20 +1040,20 @@ public class SoapClient {
         params.put("deleteOriginGroup", deleteOriginGroup);
 
         String _func = "MergeGroups";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_CONTACTS_URL, _func, wsReq);  
+        return execute(SOAP_CONTACTS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> RemoveContact(String mobilenumber) throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("mobilenumber", mobilenumber);
- 
+
         String _func = "RemoveContact";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_CONTACTS_URL, _func, wsReq);  
+        return execute(SOAP_CONTACTS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> RemoveContactByContactID(int contactId) throws Exception {
@@ -1024,9 +1062,9 @@ public class SoapClient {
         params.put("contactId", contactId);
 
         String _func = "RemoveContactByContactID";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_CONTACTS_URL, _func, wsReq);  
+        return execute(SOAP_CONTACTS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> RemoveGroup(int groupId) throws Exception {
@@ -1035,12 +1073,10 @@ public class SoapClient {
         params.put("groupId", groupId);
 
         String _func = "RemoveGroup";
-        
-        String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_CONTACTS_URL, _func, wsReq);  
-    }
 
-    
+        String wsReq = soapBuilder.buildWsReq(_func, params);
+        return execute(SOAP_CONTACTS_URL, _func, wsReq);
+    }
 
     // Actions
     public CompletionStage<HttpResponse> AddBranch(String branchName, int owner) throws Exception {
@@ -1050,12 +1086,13 @@ public class SoapClient {
         params.put("owner", owner);
 
         String _func = "AddBranch";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_CONTACTS_URL, _func, wsReq);  
+        return execute(SOAP_CONTACTS_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> AddBulk(String from, int branch, int bulkType, String title, String message, String rangeFrom, String rangeTo, String DateToSend, int requestCount, int rowFrom) throws Exception {
+    public CompletionStage<HttpResponse> AddBulk(String from, int branch, int bulkType, String title, String message,
+            String rangeFrom, String rangeTo, String DateToSend, int requestCount, int rowFrom) throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("from", from);
@@ -1070,11 +1107,13 @@ public class SoapClient {
         params.put("rowFrom", rowFrom);
 
         String _func = "AddBulk";
-     
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_ACTIONS_URL, _func, wsReq);  
+        return execute(SOAP_ACTIONS_URL, _func, wsReq);
     }
-    public CompletionStage<HttpResponse> AddBulk2(String from, int branch, int bulkType, String title, String message, String rangeFrom, String rangeTo, String DateToSend, int requestCount, int rowFrom) throws Exception {
+
+    public CompletionStage<HttpResponse> AddBulk2(String from, int branch, int bulkType, String title, String message,
+            String rangeFrom, String rangeTo, String DateToSend, int requestCount, int rowFrom) throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("from", from);
@@ -1089,12 +1128,13 @@ public class SoapClient {
         params.put("rowFrom", rowFrom);
 
         String _func = "AddBulk2";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_ACTIONS_URL, _func, wsReq);  
+        return execute(SOAP_ACTIONS_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> AddNewBulk(String from, int branch, int bulkType, String title, String message, String rangeFrom, String rangeTo, String DateToSend, int requestCount, int rowFrom) throws Exception {
+    public CompletionStage<HttpResponse> AddNewBulk(String from, int branch, int bulkType, String title, String message,
+            String rangeFrom, String rangeTo, String DateToSend, int requestCount, int rowFrom) throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("from", from);
@@ -1109,9 +1149,9 @@ public class SoapClient {
         params.put("rowFrom", rowFrom);
 
         String _func = "AddNewBulk";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_ACTIONS_URL, _func, wsReq);  
+        return execute(SOAP_ACTIONS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> AddNumber(int branchId, String[] mobileNumbers) throws Exception {
@@ -1121,9 +1161,9 @@ public class SoapClient {
         params.put("branchId", branchId);
 
         String _func = "AddNumber";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_ACTIONS_URL, _func, wsReq);  
+        return execute(SOAP_ACTIONS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetBranchs(int owner) throws Exception {
@@ -1132,18 +1172,18 @@ public class SoapClient {
         params.put("owner", owner);
 
         String _func = "GetBranchs";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_ACTIONS_URL, _func, wsReq);  
+        return execute(SOAP_ACTIONS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetBulk() throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         String _func = "GetBulk";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_ACTIONS_URL, _func, wsReq);  
+        return execute(SOAP_ACTIONS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetBulkCount(int branch, String rangeFrom, String rangeTo) throws Exception {
@@ -1154,9 +1194,9 @@ public class SoapClient {
         params.put("rangeTo", rangeTo);
 
         String _func = "GetBulkCount";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_ACTIONS_URL, _func, wsReq);  
+        return execute(SOAP_ACTIONS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetBulkReceptions(int bulkId, int fromRows) throws Exception {
@@ -1166,9 +1206,9 @@ public class SoapClient {
         params.put("fromRows", fromRows);
 
         String _func = "GetBulkReceptions";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_ACTIONS_URL, _func, wsReq);  
+        return execute(SOAP_ACTIONS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetBulkStatus(int bulkId, int sent, int failed, int status) throws Exception {
@@ -1180,9 +1220,9 @@ public class SoapClient {
         params.put("status", status);
 
         String _func = "GetBulkStatus";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_ACTIONS_URL, _func, wsReq);  
+        return execute(SOAP_ACTIONS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetMessagesReceptions(long msgId, int fromRows) throws Exception {
@@ -1192,9 +1232,9 @@ public class SoapClient {
         params.put("fromRows", fromRows);
 
         String _func = "GetMessagesReceptions";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_ACTIONS_URL, _func, wsReq);  
+        return execute(SOAP_ACTIONS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetMobileCount(int branch, String rangeFrom, String rangeTo) throws Exception {
@@ -1205,36 +1245,36 @@ public class SoapClient {
         params.put("rangeTo", rangeTo);
 
         String _func = "GetMobileCount";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_ACTIONS_URL, _func, wsReq);  
+        return execute(SOAP_ACTIONS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetSendBulk() throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         String _func = "GetSendBulk";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_ACTIONS_URL, _func, wsReq);  
+        return execute(SOAP_ACTIONS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetTodaySent() throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         String _func = "GetTodaySent";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_ACTIONS_URL, _func, wsReq);  
+        return execute(SOAP_ACTIONS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetTotalSent() throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         String _func = "GetTotalSent";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_ACTIONS_URL, _func, wsReq);  
+        return execute(SOAP_ACTIONS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> RemoveBranch(int branchId) throws Exception {
@@ -1243,9 +1283,9 @@ public class SoapClient {
         params.put("branchId", branchId);
 
         String _func = "RemoveBranch";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_ACTIONS_URL, _func, wsReq);  
+        return execute(SOAP_ACTIONS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> RemoveBulk(int bulkId) throws Exception {
@@ -1254,12 +1294,13 @@ public class SoapClient {
         params.put("bulkId", bulkId);
 
         String _func = "RemoveBulk";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_ACTIONS_URL, _func, wsReq);  
+        return execute(SOAP_ACTIONS_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> SendMultipleSMS(String[] to, String from, String[] text, boolean isflash, String udh) throws Exception {
+    public CompletionStage<HttpResponse> SendMultipleSMS(String[] to, String from, String[] text, boolean isflash,
+            String udh) throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("to", new SoapXmlBuilder.SoapArray("string", Arrays.asList(to)));
@@ -1269,12 +1310,13 @@ public class SoapClient {
         params.put("udh", udh);
 
         String _func = "SendMultipleSMS";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_ACTIONS_URL, _func, wsReq);  
+        return execute(SOAP_ACTIONS_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> SendMultipleSMS2(String[] to, String[] from, String[] text, boolean isflash, String udh) throws Exception {
+    public CompletionStage<HttpResponse> SendMultipleSMS2(String[] to, String[] from, String[] text, boolean isflash,
+            String udh) throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("to", new SoapXmlBuilder.SoapArray("string", Arrays.asList(to)));
@@ -1284,9 +1326,9 @@ public class SoapClient {
         params.put("udh", udh);
 
         String _func = "SendMultipleSMS2";
-     
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_ACTIONS_URL, _func, wsReq);  
+        return execute(SOAP_ACTIONS_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> UpdateBulkDelivery(int bulkId) throws Exception {
@@ -1295,15 +1337,14 @@ public class SoapClient {
         params.put("bulkId", bulkId);
 
         String _func = "UpdateBulkDelivery";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_ACTIONS_URL, _func, wsReq);  
+        return execute(SOAP_ACTIONS_URL, _func, wsReq);
     }
 
-    
-
     // Schedule
-    public CompletionStage<HttpResponse> AddMultipleSchedule(String[] to, String from, String[] text, boolean isflash, String[] scheduleDateTime, String period) throws Exception {
+    public CompletionStage<HttpResponse> AddMultipleSchedule(String[] to, String from, String[] text, boolean isflash,
+            String[] scheduleDateTime, String period) throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("to", new SoapXmlBuilder.SoapArray("string", Arrays.asList(to)));
@@ -1314,12 +1355,14 @@ public class SoapClient {
         params.put("isflash", isflash);
 
         String _func = "AddMultipleSchedule";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_SCHEDULE_URL, _func, wsReq);  
+        return execute(SOAP_SCHEDULE_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> AddNewUsance(String to, String from, String text, boolean isflash, String scheduleStartDateTime, int countrepeat, String scheduleEndDateTime, String periodType) throws Exception {
+    public CompletionStage<HttpResponse> AddNewUsance(String to, String from, String text, boolean isflash,
+            String scheduleStartDateTime, int countrepeat, String scheduleEndDateTime, String periodType)
+            throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("to", to);
@@ -1330,14 +1373,15 @@ public class SoapClient {
         params.put("countrepeat", countrepeat);
         params.put("scheduleEndDateTime", scheduleEndDateTime);
         params.put("periodType", periodType);
-        
+
         String _func = "AddNewUsance";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_SCHEDULE_URL, _func, wsReq);  
+        return execute(SOAP_SCHEDULE_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> AddSchedule(String to, String from, String text, boolean isflash, String scheduleDateTime, String period) throws Exception {
+    public CompletionStage<HttpResponse> AddSchedule(String to, String from, String text, boolean isflash,
+            String scheduleDateTime, String period) throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("to", to);
@@ -1347,12 +1391,13 @@ public class SoapClient {
         params.put("scheduleDateTime", scheduleDateTime);
 
         String _func = "AddSchedule";
-     
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_SCHEDULE_URL, _func, wsReq);  
+        return execute(SOAP_SCHEDULE_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> AddUsance(String to, String from, String text, boolean isflash, String scheduleStartDateTime, int repeatAfterDays, String scheduleEndDateTime) throws Exception {
+    public CompletionStage<HttpResponse> AddUsance(String to, String from, String text, boolean isflash,
+            String scheduleStartDateTime, int repeatAfterDays, String scheduleEndDateTime) throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("to", to);
@@ -1362,11 +1407,11 @@ public class SoapClient {
         params.put("scheduleStartDateTime", scheduleStartDateTime);
         params.put("repeatAfterDays", repeatAfterDays);
         params.put("scheduleEndDateTime", scheduleEndDateTime);
-        
+
         String _func = "AddUsance";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_SCHEDULE_URL, _func, wsReq);  
+        return execute(SOAP_SCHEDULE_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> GetScheduleStatus(int scheduleId) throws Exception {
@@ -1375,9 +1420,9 @@ public class SoapClient {
         params.put("scheduleId", scheduleId);
 
         String _func = "GetScheduleStatus";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_SCHEDULE_URL, _func, wsReq);  
+        return execute(SOAP_SCHEDULE_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> RemoveSchedule(int scheduleId) throws Exception {
@@ -1386,9 +1431,9 @@ public class SoapClient {
         params.put("scheduleId", scheduleId);
 
         String _func = "RemoveSchedule";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_SCHEDULE_URL, _func, wsReq);  
+        return execute(SOAP_SCHEDULE_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> RemoveScheduleList(int[] scheduleIdList) throws Exception {
@@ -1397,10 +1442,10 @@ public class SoapClient {
         params.put("scheduleIdList", new SoapXmlBuilder.SoapArray("int", Arrays.asList(scheduleIdList)));
 
         String _func = "RemoveScheduleList";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_SCHEDULE_URL, _func, wsReq);  
-	}
+        return execute(SOAP_SCHEDULE_URL, _func, wsReq);
+    }
 
     // Voice API Operations
     public CompletionStage<HttpResponse> GetSendSMSWithSpeechTextStatus(int recId) throws Exception {
@@ -1409,12 +1454,13 @@ public class SoapClient {
         params.put("recId", recId);
 
         String _func = "GetSendSMSWithSpeechTextStatus";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_VOICE_URL, _func, wsReq);  
+        return execute(SOAP_VOICE_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> SendBulkSpeechText(String title, String body, String receivers, String DateToSend, int repeatCount) throws Exception {
+    public CompletionStage<HttpResponse> SendBulkSpeechText(String title, String body, String receivers,
+            String DateToSend, int repeatCount) throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("title", title);
@@ -1424,12 +1470,13 @@ public class SoapClient {
         params.put("repeatCount", repeatCount);
 
         String _func = "SendBulkSpeechText";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_VOICE_URL, _func, wsReq);  
+        return execute(SOAP_VOICE_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> SendBulkVoiceSMS(String title, int voiceFileId, String receivers, String DateToSend, int repeatCount) throws Exception {
+    public CompletionStage<HttpResponse> SendBulkVoiceSMS(String title, int voiceFileId, String receivers,
+            String DateToSend, int repeatCount) throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("title", title);
@@ -1439,12 +1486,13 @@ public class SoapClient {
         params.put("repeatCount", repeatCount);
 
         String _func = "SendBulkVoiceSMS";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_VOICE_URL, _func, wsReq);  
+        return execute(SOAP_VOICE_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> SendSMSWithSpeechText(String smsBody, String speechBody, String from, String to) throws Exception {
+    public CompletionStage<HttpResponse> SendSMSWithSpeechText(String smsBody, String speechBody, String from,
+            String to) throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("smsBody", smsBody);
@@ -1453,12 +1501,13 @@ public class SoapClient {
         params.put("to", to);
 
         String _func = "SendSMSWithSpeechText";
-     
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_VOICE_URL, _func, wsReq);  
+        return execute(SOAP_VOICE_URL, _func, wsReq);
     }
 
-    public CompletionStage<HttpResponse> SendSMSWithSpeechTextBySchduleDate(String smsBody, String speechBody, String from, String to, String scheduleDate) throws Exception {
+    public CompletionStage<HttpResponse> SendSMSWithSpeechTextBySchduleDate(String smsBody, String speechBody,
+            String from, String to, String scheduleDate) throws Exception {
         Map<String, Object> params = new LinkedHashMap<>();
 
         params.put("smsBody", smsBody);
@@ -1468,9 +1517,9 @@ public class SoapClient {
         params.put("scheduleDate", scheduleDate);
 
         String _func = "SendSMSWithSpeechTextBySchduleDate";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_VOICE_URL, _func, wsReq);  
+        return execute(SOAP_VOICE_URL, _func, wsReq);
     }
 
     public CompletionStage<HttpResponse> UploadVoiceFile(String title, String base64StringFile) throws Exception {
@@ -1480,9 +1529,9 @@ public class SoapClient {
         params.put("base64StringFile", base64StringFile);
 
         String _func = "UploadVoiceFile";
-        
+
         String wsReq = soapBuilder.buildWsReq(_func, params);
-        return execute(SOAP_VOICE_URL, _func, wsReq);  
+        return execute(SOAP_VOICE_URL, _func, wsReq);
     }
 
 }
